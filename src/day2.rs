@@ -106,7 +106,7 @@ impl MovePast for Chars<'_> {
 }
 
 pub fn part1() {
-    let file = File::open("src/input_day2").unwrap();
+    let file = File::open("inputs/day2").unwrap();
     let mut lines = io::BufReader::new(file).lines();
     let mut valid_games = 0;
     let mut game = 1;
@@ -126,7 +126,7 @@ pub fn part1() {
 }
 
 pub fn part2() {
-    let file = File::open("src/input_day2").unwrap();
+    let file = File::open("inputs/day2").unwrap();
     let mut lines = io::BufReader::new(file).lines();
     let mut cubed = 0;
 
@@ -141,7 +141,8 @@ pub fn part2() {
     println!("cubed: {cubed}");
 }
 
-pub fn day2() {
+pub fn main() {
+    println!("Day 2");
     part1();
     part2();
 }

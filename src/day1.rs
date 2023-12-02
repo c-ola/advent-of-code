@@ -10,7 +10,7 @@ const NUMBERS_ALPHA: [&str; 9] = [
 const NUMBERS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 fn part1(){
-    let file = File::open("src/input_day1").unwrap();
+    let file = File::open("./inputs/day1").unwrap();
     let lines = io::BufReader::new(file).lines();
     let mut sum = 0;
 
@@ -30,7 +30,7 @@ fn part1(){
 }
 
 fn part2(){
-    let file = File::open("src/input_day1").unwrap();
+    let file = File::open("./inputs/day1").unwrap();
     let lines = io::BufReader::new(file).lines();
     let mut sum = 0;
 
@@ -55,7 +55,7 @@ fn part2(){
     println!("p2 sum: {sum}")
 }
 
-pub fn day1() {
+pub fn main() {
     println!("Day 1");
     part1();
     part2();
