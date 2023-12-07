@@ -1,6 +1,9 @@
 /*
  * Overall happy with this solution,
  * but the type_from_count is a little scuffed
+ *
+ * The part1 and 2 functions are also literally the same
+ * just one uses jokers and the other doesnt
  */
 
 use std::cmp::Ordering;
@@ -50,6 +53,7 @@ fn get_type(hand: &String, uses_joker: bool) -> usize {
     let mut labels: HashMap<char, usize> = HashMap::new();
     let hand = hand.as_bytes();
     let mut jokers = 0;
+
     for i in 0..hand.len() {
         let c = order_label(hand[i] as char, uses_joker);
         if c == '0' {
@@ -63,35 +67,27 @@ fn get_type(hand: &String, uses_joker: bool) -> usize {
         }
     }
 
-    place_jokers(jokers, &mut labels);
     let mut labels_vec = labels
         .iter()
         .map(|x| (*x.1, *x.0))
         .collect::<Vec<(usize, char)>>();
-    labels_vec.sort_by(|a, b| b.cmp(a));
-    let t = type_from_count(&labels_vec);
-
-    t
-}
-
-fn place_jokers(jokers: usize, labels: &mut HashMap<char, usize>) {
-    let mut labels_vec = labels
-        .iter()
-        .map(|x| (*x.1, *x.0))
-        .collect::<Vec<(usize, char)>>();
+    
+    // optimal joker placement at the front of the sorted array
     labels_vec.sort_by(|a, b| {
         if b.0.cmp(&a.0) == Ordering::Equal {
             return b.1.cmp(&a.1);
         }
         b.0.cmp(&a.0)
     });
-
+    
     if jokers == 5 {
-        labels.insert('0', 5);
+        labels_vec.push((5, '0'));
     } else {
-        let val = labels.get_mut(&labels_vec[0].1).unwrap();
-        *val += jokers;
+        labels_vec[0].0 += jokers;
     }
+
+    let t = type_from_count(&labels_vec);
+    t
 }
 
 fn type_from_count(labels: &Vec<(usize, char)>) -> usize {
@@ -148,7 +144,7 @@ fn part1() {
         .enumerate()
         .fold(0, |c, n| c + n.1.bid * (n.0 + 1));
 
-    println!("{total_winnings}");
+    println!("P1: {total_winnings}");
 }
 
 fn part2() {
@@ -172,7 +168,7 @@ fn part2() {
         .enumerate()
         .fold(0, |c, n| c + n.1.bid * (n.0 + 1));
 
-    println!("{total_winnings}");
+    println!("P2: {total_winnings}");
 }
 
 fn main() {
